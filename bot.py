@@ -16,6 +16,18 @@ TRADING_PAIR = 'XRPUSDT'
 def check_xrp_price():
     url = f"{BASE_URL}/api/v3/ticker/price?symbol={TRADING_PAIR}"
     response = requests.get(url)
+    print("Status code:", response.status_code)
+    print("Raw response:", response.text)
+    try:
+        data = response.json()
+    except Exception as e:
+        print("Failed to parse response:", response.text)
+        raise e
+    print("API response:", data)
+    if 'price' not in data:
+        raise Exception(f"Field 'price' not found in API response: {data}")
+    price = float(data['price'])
+    return price
     try:
         data = response.json()
     except Exception as e:
