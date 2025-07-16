@@ -16,24 +16,12 @@ TRADING_PAIR = 'XRPUSDT'
 def check_xrp_price():
     url = f"{BASE_URL}/api/v3/ticker/price?symbol={TRADING_PAIR}"
     response = requests.get(url)
-    print("Status code:", response.status_code)
-    print("Raw response:", response.text)
     try:
         data = response.json()
+        print("Raw response:", data)  # <-- This will show exactly what Binance API returns
     except Exception as e:
         print("Failed to parse response:", response.text)
         raise e
-    print("API response:", data)
-    if 'price' not in data:
-        raise Exception(f"Field 'price' not found in API response: {data}")
-    price = float(data['price'])
-    return price
-    try:
-        data = response.json()
-    except Exception as e:
-        print("Failed to parse response:", response.text)
-        raise e
-    print("API response:", data)
     if 'price' not in data:
         raise Exception(f"Field 'price' not found in API response: {data}")
     price = float(data['price'])
@@ -44,12 +32,10 @@ def main():
         try:
             price = check_xrp_price()
             print(f"Current {TRADING_PAIR} price: {price}")
-            # Add your trading logic here
-
+            # Add your trading logic here!
         except Exception as e:
             print("Error:", e)
-        
-        time.sleep(60)
+        time.sleep(60)  # Check every minute
 
 if __name__ == "__main__":
     main()
