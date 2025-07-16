@@ -1,8 +1,6 @@
 print("Hello from bot!")     
-
 import sys
 print(sys.version)           
-
 def check_xrp_price():
     url = f"{BASE_URL}/api/v3/ticker/price?symbol={TRADING_PAIR}"
     response = requests.get(url)
